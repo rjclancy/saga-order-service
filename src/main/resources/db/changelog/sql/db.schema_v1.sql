@@ -3,4 +3,4 @@ CREATE TABLE orders (
     customer_id VARCHAR(20) NOT NULL
 );
 
-CREATE SEQUENCE user_seq increment BY 1 start 1 OWNED BY orders.id;
+CREATE SEQUENCE orders_seq increment BY 1 start 1 OWNED BY orders.id;
