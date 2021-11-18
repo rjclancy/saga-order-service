@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PulsarConfig {
 
-  private static final String SERVICE_URL = "pulsar://localhost:6650";
+  private static final String SERVICE_URL = "pulsar://pulsar:6650";
   private static final String ORDER_CONSUMER_TOPIC_NAME = "orderConsumerTopicName";
   private static final String ORDER_CONSUMER_SUBSCRIPTION_NAME = "orderConsumerSubscriptionName";
   private static final String ORDER_EVENT_TOPIC_NAME = "orderEventTopicName";
