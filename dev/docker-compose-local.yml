@@ -2,14 +2,13 @@ version: '3.1'
 
 services:
 
-  ### Application ###
-  app:
-    image: saga-order-service
-    build: ../
+  ### Pulsar ###
+  pulsar:
+    image: apachepulsar/pulsar:2.8.0
     ports:
-      - "8081:8081"
-    depends_on:
-      - postgresqldb
+      - "6650:6650"
+      - "8080:8080"
+    command: ["bin/pulsar", "standalone"]
 
   ### ordersdb ###
   postgresqldb:
@@ -21,3 +20,13 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
+
+  ### Application ###
+  app:
+    image: saga-order-service
+    build: ../
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgresqldb
+      - pulsar
