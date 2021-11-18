@@ -1,17 +1,11 @@
-### Application configurations
 server:
-  port: 8085
-
-### Datasource configurations
+  port: 8081
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/TSDB
-    username: ronan
-    password: password
-    driver-class-name: org.postgresql.Driver
+    url:  jdbc:postgresql://postgresqldb:5432/orderdb
+    username: postgres
+    password: postgres
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
+    show-sql: true
+    generate-ddl: true
+    hibernate.ddl-auto: create

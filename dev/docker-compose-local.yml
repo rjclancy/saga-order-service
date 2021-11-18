@@ -1,40 +1,23 @@
-version: '3'
+version: '3.1'
 
 services:
 
-  ### Pulsar ###
-  standalone:
-    image: apachepulsar/pulsar
-    expose:
-      - 8080
-      - 6650
-    environment:
-      - BOOKIE_MEM=" -Xms512m -Xmx512m -XX:MaxDirectMemorySize=1g"
-    command: >
-      /bin/bash -c
-      "bin/apply-config-from-env.py conf/standalone.conf
-      && exec bin/pulsar standalone --advertised-address standalone"
-
-  ### Pulsar Dashboard ###
-  dashboard:
-    image: apachepulsar/pulsar-dashboard
-    depends_on:
-      - standalone
+  ### Application ###
+  app:
+    image: saga-order-service
+    build: ../
     ports:
-      - 80:80
-    environment:
-      - SERVICE_URL=http://standalone:8080
+      - "8081:8081"
+    depends_on:
+      - postgresqldb
 
-  ### Postgres Order DB ###
-  Orderdb:
+  ### ordersdb ###
+  postgresqldb:
     image: postgres
-    environment:
-      POSTGRES_DB: Orderdb
-      POSTGRES_USER: ronan
-      POSTGRES_PASSWORD: password
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
+    ports:
+      - "5432"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - 5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
